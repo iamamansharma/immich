@@ -236,6 +236,7 @@ export interface SystemConfig {
     clip: {
       enabled: boolean;
       modelName: string;
+      duplicateThreshold: number;
     };
     facialRecognition: {
       enabled: boolean;

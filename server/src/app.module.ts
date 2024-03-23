@@ -20,6 +20,8 @@ import { ApiService } from 'src/services/api.service';
 import { MicroservicesService } from 'src/services/microservices.service';
 import { otelConfig } from 'src/utils/instrumentation';
 import { ImmichLogger } from 'src/utils/logger';
+import { IAssetDuplicateRepository } from 'src/interfaces/asset-duplicate.interface';
+import { AssetDuplicateRepository } from 'src/repositories/asset-duplicate.repository';
 
 const providers = [ImmichLogger];
 const common = [...services, ...providers, ...repositories];
