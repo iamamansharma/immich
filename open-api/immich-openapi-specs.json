@@ -7157,6 +7157,9 @@
           "backgroundTask": {
             "$ref": "#/components/schemas/JobStatusDto"
           },
+          "duplicateDetection": {
+            "$ref": "#/components/schemas/JobStatusDto"
+          },
           "faceDetection": {
             "$ref": "#/components/schemas/JobStatusDto"
           },
@@ -7193,6 +7196,7 @@
         },
         "required": [
           "backgroundTask",
+          "duplicateDetection",
           "faceDetection",
           "facialRecognition",
           "library",
@@ -7805,6 +7809,10 @@
       },
       "CLIPConfig": {
         "properties": {
+          "duplicateThreshold": {
+            "format": "float",
+            "type": "number"
+          },
           "enabled": {
             "type": "boolean"
           },
@@ -7819,6 +7827,7 @@
           }
         },
         "required": [
+          "duplicateThreshold",
           "enabled",
           "modelName"
         ],
@@ -8508,6 +8517,7 @@
           "faceDetection",
           "facialRecognition",
           "smartSearch",
+          "duplicateDetection",
           "backgroundTask",
           "storageTemplateMigration",
           "migration",
@@ -10403,6 +10413,9 @@
           "backgroundTask": {
             "$ref": "#/components/schemas/JobSettingsDto"
           },
+          "duplicateDetection": {
+            "$ref": "#/components/schemas/JobSettingsDto"
+          },
           "faceDetection": {
             "$ref": "#/components/schemas/JobSettingsDto"
           },
@@ -10433,6 +10446,7 @@
         },
         "required": [
           "backgroundTask",
+          "duplicateDetection",
           "faceDetection",
           "library",
           "metadataExtraction",
