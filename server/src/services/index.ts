@@ -27,6 +27,7 @@ import { TagService } from 'src/services/tag.service';
 import { TimelineService } from 'src/services/timeline.service';
 import { TrashService } from 'src/services/trash.service';
 import { UserService } from 'src/services/user.service';
+import { WorkflowService } from 'src/services/workflow.service';
 
 export const services = [
   ApiService,
@@ -58,4 +59,5 @@ export const services = [
   TimelineService,
   TrashService,
   UserService,
+  WorkflowService,
 ];
