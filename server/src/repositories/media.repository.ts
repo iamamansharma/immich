@@ -1,3 +1,4 @@
+import { exiftool } from 'exiftool-vendored';
 import ffmpeg, { FfprobeData } from 'fluent-ffmpeg';
 import fs from 'node:fs/promises';
 import { Writable } from 'node:stream';
@@ -14,7 +15,6 @@ import {
 import { Instrumentation } from 'src/utils/instrumentation';
 import { ImmichLogger } from 'src/utils/logger';
 import { handlePromiseError } from 'src/utils/misc';
-import { exiftool } from 'exiftool-vendored';
 
 const probe = promisify<string, FfprobeData>(ffmpeg.ffprobe);
 sharp.concurrency(0);
