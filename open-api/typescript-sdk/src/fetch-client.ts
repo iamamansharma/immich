@@ -859,6 +859,7 @@ export type SystemConfigFFmpegDto = {
 };
 export type SystemConfigImageDto = {
     colorspace: Colorspace;
+    extractEmbedded: boolean;
     previewFormat: ImageFormat;
     previewSize: number;
     quality: number;

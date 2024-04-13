@@ -10372,6 +10372,9 @@
           "colorspace": {
             "$ref": "#/components/schemas/Colorspace"
           },
+          "extractEmbedded": {
+            "type": "boolean"
+          },
           "previewFormat": {
             "$ref": "#/components/schemas/ImageFormat"
           },
@@ -10390,6 +10393,7 @@
         },
         "required": [
           "colorspace",
+          "extractEmbedded",
           "previewFormat",
           "previewSize",
           "quality",
