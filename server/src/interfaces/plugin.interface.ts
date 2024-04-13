@@ -3,13 +3,13 @@ import { PluginEntity } from 'src/entities/plugin.entity';
 export const IPluginRepository = 'IPluginRepository';
 
 export interface PluginSearchOptions {
-  id: string;
-  namespace: string;
-  version: number;
-  name: string;
-  isEnabled: boolean;
-  isInstalled: boolean;
-  isOfficial: boolean;
+  id?: string;
+  namespace?: string;
+  version?: number;
+  name?: string;
+  isEnabled?: boolean;
+  isInstalled?: boolean;
+  isOfficial?: boolean;
 }
 
 export interface IPluginRepository {

@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { writeFile } from 'node:fs/promises';
 import { PluginEntity } from 'src/entities/plugin.entity';
 import { IPluginRepository, PluginLike, PluginSearchOptions } from 'src/interfaces/plugin.interface';
+import { ImmichLogger } from 'src/utils/logger';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class PluginRepository implements IPluginRepository {
+  private logger = new ImmichLogger(PluginRepository.name);
   constructor(@InjectRepository(PluginEntity) private repository: Repository<PluginEntity>) {}
 
   search(options: PluginSearchOptions): Promise<PluginEntity[]> {
@@ -38,8 +41,13 @@ export class PluginRepository implements IPluginRepository {
     await this.repository.delete({ id });
   }
 
-  download(url: string, downloadPath: string): Promise<void> {
-    throw new Error('Method not implemented.');
+  async download(url: string, downloadPath: string): Promise<void> {
+    try {
+      const { json } = await fetch(url);
+      await writeFile(downloadPath, await json());
+    } catch (error) {
+      this.logger.error(`Error downloading the plugin from ${url}. ${error}`);
+    }
   }
 
   load(pluginPath: string): Promise<PluginLike> {

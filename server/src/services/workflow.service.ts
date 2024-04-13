@@ -1,8 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { IWorkflowTriggerJob, JobStatus, WorkflowTriggerType } from 'src/interfaces/job.interface';
+import { IPluginRepository, PluginLike } from 'src/interfaces/plugin.interface';
 
 @Injectable()
 export class WorkflowService {
+  private plugins: PluginLike[];
+  constructor(@Inject(IPluginRepository) private pluginRepository: IPluginRepository) {}
+
+  async init(): Promise<void> {
+    const activePlugins = await this.pluginRepository.search({ isEnabled: true });
+    this.plugins = await Promise.all(activePlugins.map(({ installPath }) => this.pluginRepository.load(installPath)));
+  }
+
   // async register() {
   //   const plugins = ['/src/abc'];
   //   for (const pluginModule of plugins) {
