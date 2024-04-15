@@ -4,7 +4,7 @@ import { IPluginRepository, PluginLike } from 'src/interfaces/plugin.interface';
 
 @Injectable()
 export class WorkflowService {
-  private plugins: PluginLike[];
+  private plugins?: PluginLike[];
   constructor(@Inject(IPluginRepository) private pluginRepository: IPluginRepository) {}
 
   async init(): Promise<void> {
