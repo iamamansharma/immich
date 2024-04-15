@@ -1,4 +1,8 @@
-import { Plugin } from 'src/interfaces/plugin.interface';
+import { ActionType, AssetDto, Plugin, PluginContext } from 'src/interfaces/plugin.interface';
+
+const onAsset = async (ctx: PluginContext, asset: AssetDto) => {
+  await ctx.updateAsset({ id: asset.id, isArchived: true });
+};
 
 export const plugin: Plugin = {
   version: 1,
@@ -9,30 +13,39 @@ export const plugin: Plugin = {
     {
       id: 'asset.favorite',
       name: '',
+      type: ActionType.ASSET,
       description: '',
-      onAction: () => {
-        console.log('Favorite');
+      onAction: async (ctx, asset) => {
+        await ctx.updateAsset({ id: asset.id, isArchived: false });
       },
     },
     {
       id: 'asset.unfavorite',
       name: '',
+      type: ActionType.ASSET,
       description: '',
       onAction: () => {
         console.log('Unfavorite');
       },
     },
     {
-      id: 'asset.archive',
+      id: 'asset.action',
       name: '',
+      type: ActionType.ASSET,
       description: '',
-      onAction: () => {
-        console.log('Archive');
-      },
+      onAction: (ctx, asset) => onAsset(ctx, asset),
+    },
+    {
+      id: 'album-asset.action',
+      name: '',
+      type: ActionType.ALBUM_ASSET,
+      description: '',
+      onAction: (ctx, { asset }) => onAsset(ctx, asset),
     },
     {
       id: 'asset.unarchive',
       name: '',
+      type: ActionType.ASSET,
       description: '',
       onAction: () => {
         console.log('Unarchive');

@@ -43,12 +43,19 @@ export type PluginAction<T extends PluginConfig | undefined = undefined> = {
   description: string;
   events?: EventType[];
   config?: T;
-  onAction: OnAction<T>;
-};
+} & (
+  | { type: ActionType.ASSET; onAction: OnAction<T, AssetDto> }
+  | { type: ActionType.ALBUM; onAction: OnAction<T, AlbumDto> }
+  | { type: ActionType.ALBUM_ASSET; onAction: OnAction<T, { asset: AssetDto; album: AlbumDto }> }
+);
 
 export type OnAction<T extends PluginConfig | undefined, D = PluginActionData> = T extends undefined
   ? (ctx: PluginContext, data: D) => MaybePromise<void>
   : (ctx: PluginContext, data: D, config: InferConfig<T>) => MaybePromise<void>;
+
+export interface PluginContext {
+  updateAsset: (asset: { id: string; isArchived: boolean }) => Promise<void>;
+}
 
 export type PluginActionData = { data: { asset?: AssetDto; album?: AlbumDto } } & (
   | { type: EventType.ASSET_UPLOAD; data: { asset: AssetDto } }
@@ -60,10 +67,6 @@ export type PluginActionData = { data: { asset?: AssetDto; album?: AlbumDto } } 
 );
 
 export type PluginConfig = Record<string, ConfigItem>;
-
-export interface PluginContext {
-  updateAsset: (asset: { id: string; isArchived: boolean }) => Promise<void>;
-}
 
 export type ConfigItem = {
   name: string;
@@ -90,6 +93,12 @@ type InferConfig<T> = T extends PluginConfig
     }
   : never;
 
+export enum ActionType {
+  ASSET = 'asset',
+  ALBUM = 'album',
+  ALBUM_ASSET = 'album-asset',
+}
+
 export enum EventType {
   ASSET_UPLOAD = 'asset.upload',
   ASSET_UPDATE = 'asset.update',
@@ -103,5 +112,5 @@ export enum EventType {
   ALBUM_DELETE = 'album.delete',
 }
 
-export type AssetDto = any;
-export type AlbumDto = any;
+export type AssetDto = { id: string; type: 'asset' };
+export type AlbumDto = { id: string; type: 'album' };
